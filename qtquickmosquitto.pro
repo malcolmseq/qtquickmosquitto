@@ -27,16 +27,19 @@ RCC_DIR = tmp
 # Input
 SOURCES += \
     src/mosquitto_plugin.cpp \
+    src/mosquittoprivate.cpp \
     src/qmlmosquitto.cpp
 INCLUDEPATH += include
 HEADERS += \
     include/mosquitto_plugin.h \
+    include/mosquittoprivate.h \
     include/qmlmosquitto.h
 
 DISTFILES += $$DESTDIR/qmldir
 OTHER_FILES += \
     .gitignore \
-    qml/index.qml
+    qml/index.qml \
+    README.md
 
 
 #!equals(_PRO_FILE_PWD_, $$OUT_PWD) {

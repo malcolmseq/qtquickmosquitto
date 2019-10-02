@@ -8,6 +8,10 @@ Rectangle {
 
     QMLMosquitto{
         id: qmlMosquitto
+        brokerAddress: "test.mosquitto.org"
+        Component.onCompleted: {
+            console.log("index.qml::QMLMosquitto::Component.onCompleted")
+        }
     }
 
 }
