@@ -30,3 +30,18 @@
 *.exe
 *.out
 *.app
+
+
+###### Customized from here
+
+# Mac OS files
+.DS_Store
+
+# Qt Creator generated .pro.user file
+*.pro.user
+.qmake.stash
+*.qmlc
+Makefile
+
+# tmp folder
+tmp/*

@@ -1,0 +1,2 @@
+module com.sequeira.mosquitto
+plugin mosquitto
