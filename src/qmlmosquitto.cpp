@@ -21,12 +21,26 @@ QString QMLMosquitto::brokerAddress()
 
 void QMLMosquitto::setBrokerAddress(QString addr)
 {
-    Q_UNUSED(addr)
     if(_component_complete){
         qDebug()<<"QMLMosquitto::setBrokerAddress::Cannot set the broker address dynamically";
     } else {
         qDebug()<<"QMLMosquitto::setBrokerAddress::addr="<<addr;
         _broker = addr;
+    }
+}
+
+QString QMLMosquitto::topic()
+{
+    return _topic;
+}
+
+void QMLMosquitto::setTopic(QString topic)
+{
+    if(_component_complete){
+        qDebug()<<"QMLMosquitto::setTopic::Cannot set the topic dynamically";
+    } else {
+        qDebug()<<"QMLMosquitto::setTopic::topic="<<topic;
+        _topic = topic;
     }
 }
 
