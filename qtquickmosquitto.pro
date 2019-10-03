@@ -35,10 +35,12 @@ HEADERS += \
     include/mosquittoprivate.h \
     include/qmlmosquitto.h
 
-DISTFILES += $$DESTDIR/qmldir
+DISTFILES += \
+    $$DESTDIR/qmldir \
+    qml/*
+
 OTHER_FILES += \
     .gitignore \
-    qml/index.qml \
     README.md
 
 
