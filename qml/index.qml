@@ -14,4 +14,17 @@ Rectangle {
         }
     }
 
+    Row{
+        spacing: 5
+        Panel{
+            id: panel1
+            width: 350
+            height: 480
+        }
+        Panel{
+            id: panel2
+            width: 350
+            height: 480
+        }
+    }
 }
