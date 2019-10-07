@@ -1,48 +1,106 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
+import com.sequeira.mosquitto 1.0
 
 
 Item {
+    id: panel;
+    property string broker: ""
+    property string topic: ""
+
+    QMLMosquitto{
+        id: qmlMosquitto
+        onMessageReceived:{
+            textArea.append(topic + "(" + payload + ")\n")
+            textArea.cursorPosition = textArea.text.length;
+        }
+
+        Component.onCompleted: {
+            console.log("index.qml::QMLMosquitto::Component.onCompleted")
+        }
+    }
+
     Column{
         width: parent.width
         height: parent.height;
         spacing: 15;
         anchors.left: parent.left;
         anchors.leftMargin: 5;
-        Label{
-            text: "Broker:"
+        Row{
+            spacing: 5;
+            Label{
+                text: "Broker:"
+                anchors.verticalCenter: parent.verticalCenter;
+            }
+            TextField {
+                id: broker;
+                placeholderText: "Enter the broker address"
+                text: panel.broker;
+                enabled: !qmlMosquitto.isConnected;
+            }
         }
-        TextField {
-            placeholderText: "Enter the broker address"
+
+        Row{
+            spacing: 5;
+            Label{
+                text:  "Topic:"
+                anchors.verticalCenter: parent.verticalCenter;
+            }
+            TextField {
+                id: topic;
+                placeholderText: "Enter the topic"
+                text: panel.topic;
+            }
         }
-        Label{
-            text:  "Topic:"
-        }
-        TextField {
-            placeholderText: "Enter the topic"
-        }
+
 
         Flow{
             spacing: 15;
             width: parent.width;
-            Button{
-                text:  "Sub Start"
+            Button {
+                text: "Connect"
+                enabled: !qmlMosquitto.isConnected
+                onClicked: {
+                    qmlMosquitto.brokerAddress = broker.text
+                    qmlMosquitto.topic = topic.text;
+                    qmlMosquitto.connect();
+                }
             }
             Button {
-                text: "Sub Stop"
+                text: "Disconnect"
+                enabled: qmlMosquitto.isConnected;
+                onClicked: {
+                    qmlMosquitto.disconnect();
+                }
+            }
+            Button{
+                text:  "Sub"
+                enabled: qmlMosquitto.isConnected;
+                onClicked: qmlMosquitto.subscribe()
+            }
+            Button {
+                text: "Un-Sub"
+                enabled: qmlMosquitto.isConnected;
+                onClicked: qmlMosquitto.unSubscribe()
             }
             Button {
                 text: "Clear"
+                enabled: qmlMosquitto.isConnected;
+                onClicked: textArea.text = "";
             }
         }
         TextArea{
-            placeholderText: "Sub messages"
+            id: textArea
+            placeholderText: "Sub messages will appear here"
+            cursorPosition: textArea.text.length
+
             height: 150
             width: parent.width
             background: Rectangle{
                 color: "transparent"
                 border.width: 2;
             }
+            enabled: false;
         }
 
         Label{
@@ -53,9 +111,11 @@ Item {
             spacing: 10
             TextField{
                 placeholderText: "Text to Publish"
+                enabled: qmlMosquitto.isConnected;
             }
             Button{
                 text: "Pub"
+                enabled: qmlMosquitto.isConnected;
             }
         }
 
