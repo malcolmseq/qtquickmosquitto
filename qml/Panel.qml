@@ -1,5 +1,5 @@
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.4
 import com.sequeira.mosquitto 1.0
 
 
@@ -11,7 +11,7 @@ Item {
     QMLMosquitto{
         id: qmlMosquitto
         onMessageReceived:{
-            textArea.append(topic + "(" + payload + ")\n")
+            textArea.append(topic + "(" + payload + ")")
             textArea.cursorPosition = textArea.text.length;
         }
 
@@ -89,19 +89,22 @@ Item {
                 onClicked: textArea.text = "";
             }
         }
-        TextArea{
-            id: textArea
-            placeholderText: "Sub messages will appear here"
-            cursorPosition: textArea.text.length
 
+        ScrollView{
+            id: scrollView;
             height: 150
             width: parent.width
-            background: Rectangle{
-                color: "transparent"
-                border.width: 2;
+            TextArea{
+                id: textArea
+                placeholderText: "Sub messages will appear here"
+                cursorPosition: textArea.text.length
+                background: Rectangle{
+                    color: "transparent"
+                    border.width: 2;
+                }
             }
-            enabled: false;
         }
+
 
         Label{
             text: "Publish:"
