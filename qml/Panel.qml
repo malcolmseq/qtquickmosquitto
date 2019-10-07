@@ -68,24 +68,24 @@ Item {
             }
             Button {
                 text: "Disconnect"
-                enabled: qmlMosquitto.isConnected;
+                enabled: qmlMosquitto.isConnected && !qmlMosquitto.isSubscribed;
                 onClicked: {
                     qmlMosquitto.disconnect();
                 }
             }
             Button{
                 text:  "Sub"
-                enabled: qmlMosquitto.isConnected;
+                enabled: qmlMosquitto.isConnected && !qmlMosquitto.isSubscribed;
                 onClicked: qmlMosquitto.subscribe()
             }
             Button {
                 text: "Un-Sub"
-                enabled: qmlMosquitto.isConnected;
+                enabled: qmlMosquitto.isConnected && qmlMosquitto.isSubscribed;
                 onClicked: qmlMosquitto.unSubscribe()
             }
             Button {
                 text: "Clear"
-                enabled: qmlMosquitto.isConnected;
+                enabled: textArea.text !== "";
                 onClicked: textArea.text = "";
             }
         }
@@ -102,6 +102,7 @@ Item {
                     color: "transparent"
                     border.width: 2;
                 }
+                enabled: false;
             }
         }
 
@@ -113,12 +114,17 @@ Item {
         Row{
             spacing: 10
             TextField{
+                id: pubText
                 placeholderText: "Text to Publish"
                 enabled: qmlMosquitto.isConnected;
             }
             Button{
                 text: "Pub"
                 enabled: qmlMosquitto.isConnected;
+                onClicked: {
+                    qmlMosquitto.publish(pubText.text)
+                    pubText.text = "";
+                }
             }
         }
 
