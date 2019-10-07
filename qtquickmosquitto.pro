@@ -2,7 +2,7 @@ TEMPLATE = lib
 TARGET = mosquitto
 QT += qml quick
 CONFIG += qt plugin c++11 link_pkgconfig
-
+QML_IMPORT_PATH += ./bin
 #TEMPLATE = lib
 #CONFIG += qt plugin
 DESTDIR = ./bin/com/sequeira/mosquitto
@@ -34,7 +34,7 @@ HEADERS += \
     include/mosquitto_plugin.h \
     include/mosquittoprivate.h \
     include/qmlmosquitto.h
-
+LIBS += -v
 DISTFILES += \
     $$DESTDIR/qmldir \
     qml/*
