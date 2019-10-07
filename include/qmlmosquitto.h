@@ -13,6 +13,7 @@ class QMLMosquitto : public QQuickItem, public mosqpp::mosquittopp
     Q_PROPERTY(int keepAlive READ keepAlive WRITE setKeepAlive NOTIFY keepAliveChanged)
     Q_PROPERTY(QString topic READ topic WRITE setTopic NOTIFY topicChanged)
     Q_PROPERTY(bool isConnected READ isConnected NOTIFY isConnectedChanged)
+    Q_PROPERTY(bool isSubscribed READ isSubscribed NOTIFY isSubscribedChanged)
 public:
     QMLMosquitto(QQuickItem *parent = nullptr);
     ~QMLMosquitto();
@@ -27,12 +28,14 @@ public:
     int keepAlive();
     void setKeepAlive(int k);
     bool isConnected();
+    bool isSubscribed();
 
     // Invokables
     Q_INVOKABLE void connect();
     Q_INVOKABLE void disconnect();
     Q_INVOKABLE void subscribe();
     Q_INVOKABLE void unSubscribe();
+    Q_INVOKABLE void publish(QString text);
 
     void componentComplete();
 
@@ -44,6 +47,7 @@ public:
     void on_subscribe(int mid, int qos_count, const int *granted_qos);
     void on_unsubscribe(int mid);
     void on_message(const struct mosquitto_message *);
+    void on_publish(int mid);
 
 signals:
     void brokerAddressChanged(QString brokerAddress);
@@ -51,12 +55,14 @@ signals:
     void keepAliveChanged(int keepAlive);
     void topicChanged(QString newTopic);
     void isConnectedChanged(bool isConnected);
+    void isSubscribedChanged(bool isSubscribed);
     void messageReceived(QString topic, QString payload);
 private:
     bool _component_complete;
     QString _broker;
     QString _topic;
     bool _is_connected;
+    bool _is_subscribed;
 
     int _port;
     int _keepalive;

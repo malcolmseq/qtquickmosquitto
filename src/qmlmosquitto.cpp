@@ -2,7 +2,7 @@
 
 QMLMosquitto::QMLMosquitto(QQuickItem *parent):
     QQuickItem(parent), mosqpp::mosquittopp("test"), _component_complete(false),
-    _is_connected(false), _port(1883), _keepalive(60)
+    _is_connected(false), _is_subscribed(false), _port(1883), _keepalive(60)
 {
     // By default, QQuickItem does not draw anything. If you subclass
     // QQuickItem to create a visual item, you will need to uncomment the
@@ -111,12 +111,22 @@ void QMLMosquitto::on_log(int i, const char * str)
 
 void QMLMosquitto::on_subscribe(int mid, int qos_count, const int *granted_qos)
 {
-    qDebug()<<"QMLMosquitto::on_subscribe::mid="<<mid<<", qos_count="<<qos_count<<", granted_qos"<<granted_qos;
+    qDebug()<<"QMLMosquitto::on_subscribe::mid="<<mid
+           <<", qos_count="<<qos_count<<", granted_qos"<<granted_qos
+          <<", isSubscribed="<<_is_subscribed;
+    if(_is_subscribed == false){
+        _is_subscribed = true;
+        emit isSubscribedChanged(true);
+    }
 }
 
 void QMLMosquitto::on_unsubscribe(int mid)
 {
-    qDebug()<<"QMLMosquitto::on_unsubscribe::mid="<<mid;
+    qDebug()<<"QMLMosquitto::on_unsubscribe::mid="<<mid<<", isSubscribed="<<_is_subscribed;
+    if(_is_subscribed == true){
+        _is_subscribed = false;
+        emit isSubscribedChanged(false);
+    }
 }
 
 void QMLMosquitto::on_message(const mosquitto_message *message)
@@ -128,9 +138,19 @@ void QMLMosquitto::on_message(const mosquitto_message *message)
     emit messageReceived(QString(message->topic), QString(payload));
 }
 
+void QMLMosquitto::on_publish(int mid)
+{
+    qDebug()<<"QMLMosquitto::on_publish::mid="<<mid;
+}
+
 bool QMLMosquitto::isConnected()
 {
     return _is_connected;
+}
+
+bool QMLMosquitto::isSubscribed()
+{
+    return _is_subscribed;
 }
 
 void QMLMosquitto::connect()
@@ -157,4 +177,10 @@ void QMLMosquitto::unSubscribe()
 {
     int ret = mosqpp::mosquittopp::unsubscribe(NULL, _topic.toLatin1().data());
     qDebug()<<"QMLMosquitto::unSubscribe::ret="<<ret;
+}
+
+void QMLMosquitto::publish(QString text)
+{
+    int ret = mosqpp::mosquittopp::publish(NULL, _topic.toLatin1().data(), text.length(), text.toLatin1().data(), 0, false);
+    qDebug()<<"QMLMosquitto::publish::ret="<<ret;
 }
