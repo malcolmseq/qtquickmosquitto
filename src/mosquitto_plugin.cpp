@@ -7,5 +7,6 @@ void MosquittoPlugin::registerTypes(const char *uri)
 {
     // @uri com.sequeiram.qmlcomponents
     qmlRegisterType<QMLMosquitto>(uri, 1, 0, "QMLMosquitto");
+    qDebug()<<"MosquittoPlugin::registerTypes";
 }
 

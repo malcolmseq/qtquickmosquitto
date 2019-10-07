@@ -2,6 +2,7 @@
 #define MOSQUITTO_PLUGIN_H
 
 #include <QQmlExtensionPlugin>
+#include <QDebug>
 
 class MosquittoPlugin : public QQmlExtensionPlugin
 {
