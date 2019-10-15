@@ -2,6 +2,7 @@
 #define QMLMOSQUITTO_H
 
 #include <QQuickItem>
+#include <QUuid>
 #include <mosquittopp.h>
 
 class QMLMosquitto : public QQuickItem, public mosqpp::mosquittopp

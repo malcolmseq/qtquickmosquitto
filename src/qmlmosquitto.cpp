@@ -1,8 +1,9 @@
 #include "qmlmosquitto.h"
 
 QMLMosquitto::QMLMosquitto(QQuickItem *parent):
-    QQuickItem(parent), mosqpp::mosquittopp("test"), _component_complete(false),
-    _is_connected(false), _is_subscribed(false), _port(1883), _keepalive(60)
+    QQuickItem(parent),
+    mosqpp::mosquittopp(QUuid::createUuid().toString(QUuid::WithoutBraces).toLatin1().data()),
+    _component_complete(false), _is_connected(false), _is_subscribed(false), _port(1883), _keepalive(60)
 {
     // By default, QQuickItem does not draw anything. If you subclass
     // QQuickItem to create a visual item, you will need to uncomment the
