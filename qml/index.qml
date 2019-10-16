@@ -6,7 +6,7 @@ Rectangle {
     height: 480;
 
     Row{
-        spacing: 5
+        spacing: 15
         Panel{
             id: panel1
             width: 350
@@ -14,10 +14,10 @@ Rectangle {
             broker: "test.mosquitto.org"
             topic: "test"
         }
-//        Panel{
-//            id: panel2
-//            width: 350
-//            height: 480
-//        }
+        Panel2{
+            id: panel2
+            width: 350
+            height: 480
+        }
     }
 }

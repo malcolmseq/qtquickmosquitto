@@ -37,7 +37,7 @@ HEADERS += \
 LIBS += -v
 DISTFILES += \
     $$DESTDIR/qmldir \
-    qml/*
+    qml/*.qml
 
 OTHER_FILES += \
     .gitignore \
