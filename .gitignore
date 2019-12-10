@@ -38,7 +38,7 @@
 .DS_Store
 
 # Qt Creator generated .pro.user file
-*.pro.user
+*.pro.user*
 .qmake.stash
 *.qmlc
 Makefile
