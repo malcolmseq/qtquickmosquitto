@@ -1,0 +1,2 @@
+module QtQuick.Mosquitto
+plugin Mosquitto

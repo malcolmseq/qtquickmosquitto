@@ -1,13 +1,10 @@
 TEMPLATE = lib
-TARGET = mosquitto
+TARGET = Mosquitto
 QT += qml quick
 CONFIG += qt plugin c++11 link_pkgconfig
 QML_IMPORT_PATH += ./bin
-#TEMPLATE = lib
-#CONFIG += qt plugin
-DESTDIR = ./bin/com/sequeira/mosquitto
-#TARGET = folderbrowser
-#CONFIG += link_pkgconfig
+
+DESTDIR = ./bin/QtQuick/Mosquitto
 
 macx {
  # Enable pkg-config (pkg-config is disabled by default in the Qt package for mac)
@@ -17,8 +14,6 @@ macx {
 }
 
 PKGCONFIG += libmosquittopp
-#TARGET = $$qtLibraryTarget($$TARGET)
-#uri = com.sequeiram.qmlcomponents
 
 OBJECTS_DIR = tmp
 MOC_DIR = tmp
