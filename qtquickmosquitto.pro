@@ -1,5 +1,5 @@
 TEMPLATE = lib
-TARGET = Mosquitto
+TARGET = mosquitto
 QT += qml quick
 CONFIG += qt plugin c++11 link_pkgconfig
 QML_IMPORT_PATH += ./bin
